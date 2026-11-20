@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="200" viewBox="0 0 960 200">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#3b82f6"/>
+    </linearGradient>
+  </defs>
+  <path d="M95 26 L26 156 L164 156 Z" fill="none" stroke="url(#g)" stroke-width="12" stroke-linejoin="round"/>
+  <circle cx="95" cy="26" r="17" fill="#22d3ee"/>
+  <circle cx="26" cy="156" r="17" fill="#3b82f6"/>
+  <circle cx="164" cy="156" r="17" fill="#3b82f6"/>
+  <text x="206" y="146" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="128"><tspan fill="#e8eef7">Hotspot</tspan><tspan fill="#22d3ee">NOC</tspan></text>
+</svg>

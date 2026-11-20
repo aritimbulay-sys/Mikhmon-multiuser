@@ -1,0 +1,548 @@
+/* Mikhmon - tampilan selaras dengan halaman login (override di atas mikhmon-ui.dark) */
+:root {
+  --mk-bg: #0a1020;
+  --mk-bg2: #0f1830;
+  --mk-panel: #111c33;
+  --mk-panel2: #16233f;
+  --mk-line: #1f2d4d;
+  --mk-text: #e6edf7;
+  --mk-muted: #7d8db0;
+  --mk-accent: #22d3ee;
+  --mk-accent2: #3b82f6;
+  --mk-pattern:
+    radial-gradient(circle at 20% 20%, rgba(34,211,238,.12), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(59,130,246,.15), transparent 45%),
+    linear-gradient(var(--mk-line) 1px, transparent 1px) 0 0 / 44px 44px,
+    linear-gradient(90deg, var(--mk-line) 1px, transparent 1px) 0 0 / 44px 44px,
+    var(--mk-bg);
+}
+html[data-mk="light"] {
+  color-scheme: light;
+  --mk-bg: #eff4f9;
+  --mk-bg2: #ffffff;
+  --mk-panel: #ffffff;
+  --mk-panel2: #edf3fa;
+  --mk-line: #dbe4ef;
+  --mk-text: #132030;
+  --mk-muted: #586a80;
+  --mk-accent: #0e93b8;
+  --mk-accent2: #2563eb;
+}
+@media (prefers-color-scheme: light) {
+  html[data-mk="auto"] {
+    color-scheme: light;
+    --mk-bg: #eff4f9;
+    --mk-bg2: #ffffff;
+    --mk-panel: #ffffff;
+    --mk-panel2: #edf3fa;
+    --mk-line: #dbe4ef;
+    --mk-text: #132030;
+    --mk-muted: #586a80;
+    --mk-accent: #0e93b8;
+    --mk-accent2: #2563eb;
+  }
+}
+
+/* Pemilih tema (ikon) di navbar */
+.mk-theme-switch {
+  display: inline-flex !important;
+  gap: 2px;
+  padding: 2px;
+  margin-top: 10px;
+  border: 1px solid var(--mk-line);
+  border-radius: 8px;
+  background: var(--mk-bg2);
+  vertical-align: middle;
+}
+.navbar .mk-theme-switch button {
+  background: transparent !important;
+  color: var(--mk-muted) !important;
+  border: 0 !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  padding: 4px 9px !important;
+  font-size: 13px !important;
+  line-height: 1 !important;
+  cursor: pointer;
+}
+.navbar .mk-theme-switch button:hover {
+  background: var(--mk-panel) !important;
+  color: var(--mk-text) !important;
+  filter: none;
+}
+.navbar .mk-theme-switch button.active {
+  background: linear-gradient(135deg, var(--mk-accent2), var(--mk-accent)) !important;
+  color: #04111f !important;
+}
+html {
+  background: var(--mk-bg) !important;
+}
+html::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--mk-pattern);
+}
+body, .wrapper, .main-container, .content-wrapper {
+  background: transparent !important;
+}
+html, body, .wrapper, .main-container, .content-wrapper {
+  color: var(--mk-text) !important;
+  font-family: -apple-system, "Segoe UI", Inter, Roboto, sans-serif !important;
+}
+
+/* Navbar atas */
+#navbar.navbar, .navbar {
+  background: var(--mk-bg2) !important;
+  border-bottom: 1px solid var(--mk-line) !important;
+  box-shadow: none !important;
+  color: var(--mk-text) !important;
+}
+.navbar a, .navbar-left, .navbar-right, .navbar-hover {
+  color: var(--mk-text) !important;
+}
+.navbar select {
+  background: var(--mk-panel) !important;
+  color: var(--mk-text) !important;
+  border: 1px solid var(--mk-line) !important;
+}
+.navbar-hover:hover, .navbar a:hover {
+  background: var(--mk-panel) !important;
+  color: var(--mk-accent) !important;
+}
+
+/* Sidebar */
+.sidenav {
+  background: var(--mk-bg2) !important;
+  border-right: 1px solid var(--mk-line) !important;
+}
+.sidenav a {
+  color: var(--mk-muted) !important;
+  border-radius: 8px !important;
+  margin: 2px 8px !important;
+}
+.sidenav a:hover {
+  background: var(--mk-panel) !important;
+  color: var(--mk-text) !important;
+}
+.sidenav a.active, .sidenav a.active:hover {
+  background: linear-gradient(90deg, rgba(34,211,238,.16), rgba(59,130,246,.06)) !important;
+  color: var(--mk-accent) !important;
+  box-shadow: inset 2px 0 0 var(--mk-accent) !important;
+}
+
+/* Kartu / panel */
+.card, .box, .box-bordered {
+  background: var(--mk-panel) !important;
+  border: 1px solid var(--mk-line) !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+  color: var(--mk-text) !important;
+}
+.card-header {
+  background: var(--mk-panel2) !important;
+  border-bottom: 1px solid var(--mk-line) !important;
+  color: var(--mk-text) !important;
+}
+.card-title, .card-header h3, .card-header .card-title {
+  color: var(--mk-text) !important;
+  font-weight: 700 !important;
+}
+.card-body, .card-footer {
+  color: var(--mk-text) !important;
+}
+
+/* Kartu router berwarna: dibuat lebih halus dengan aksen kiri */
+.box[class*="bg-"] {
+  background: linear-gradient(135deg, var(--mk-panel2), var(--mk-panel)) !important;
+  border-left: 3px solid var(--mk-accent) !important;
+}
+.box.bg-green { border-left-color: #22c55e !important; }
+.box.bg-red { border-left-color: #ef4444 !important; }
+.box.bg-yellow { border-left-color: #f59e0b !important; }
+.box.bg-purple, .box.bg-indigo { border-left-color: #a855f7 !important; }
+.box.bg-grey { border-left-color: #64748b !important; }
+.box .box-group-icon, .box-group-icon {
+  color: var(--mk-accent) !important;
+}
+.box a, .box-group-area a {
+  color: var(--mk-muted) !important;
+}
+.box a:hover, .box-group-area a:hover {
+  color: var(--mk-accent) !important;
+}
+
+/* Judul header halaman */
+h1, h2, h3, h4, h5, h6, .content-header {
+  color: var(--mk-text) !important;
+}
+
+/* Tombol */
+.btn, button, input[type="submit"], input[type="button"] {
+  background: linear-gradient(135deg, var(--mk-accent2), var(--mk-accent)) !important;
+  color: #04111f !important;
+  border: 1px solid transparent !important;
+  border-radius: 7px !important;
+  font-weight: 600 !important;
+}
+.btn:hover, button:hover, input[type="submit"]:hover {
+  filter: brightness(1.08);
+}
+.btn-danger, .btn-red {
+  background: transparent !important;
+  color: #fca5a5 !important;
+  border: 1px solid #5b2430 !important;
+}
+.group-item, .group-item-l, .group-item-r {
+  background: var(--mk-bg2) !important;
+  color: var(--mk-text) !important;
+  border-color: var(--mk-line) !important;
+}
+
+/* Input dan select */
+.form-control, input[type="text"], input[type="password"], input[type="number"], input[type="email"], select, textarea {
+  background: var(--mk-bg2) !important;
+  color: var(--mk-text) !important;
+  border: 1px solid var(--mk-line) !important;
+  border-radius: 7px !important;
+}
+.form-control:focus, input:focus, select:focus, textarea:focus {
+  border-color: var(--mk-accent) !important;
+  box-shadow: 0 0 0 3px rgba(34,211,238,.15) !important;
+  outline: none !important;
+}
+select option {
+  background: var(--mk-bg2) !important;
+  color: var(--mk-text) !important;
+}
+
+/* Tabel */
+table {
+  color: var(--mk-text) !important;
+}
+th {
+  background: var(--mk-bg2) !important;
+  color: var(--mk-muted) !important;
+  border-color: var(--mk-line) !important;
+  text-transform: uppercase;
+  font-size: 12px !important;
+  letter-spacing: .5px;
+}
+td {
+  border-color: var(--mk-line) !important;
+}
+tr:hover td {
+  background: rgba(34,211,238,.04) !important;
+}
+
+/* Teks status dan utilitas */
+.text-green { color: #86efac !important; }
+.text-red { color: #fca5a5 !important; }
+.text-blue { color: var(--mk-accent) !important; }
+.text-grey, .text-muted { color: var(--mk-muted) !important; }
+hr { border-color: var(--mk-line) !important; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--mk-bg); }
+::-webkit-scrollbar-thumb { background: var(--mk-line); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #2a3b63; }
+
+/* Blok bawah sidebar: profil, ganti password, logout, tema */
+.sidenav {
+  display: flex !important;
+  flex-direction: column;
+  height: calc(100vh - 51px) !important;
+}
+.mk-sidefoot {
+  position: relative;
+  margin-top: auto;
+  flex-shrink: 0;
+  padding: 12px 12px 14px;
+  border-top: 1px solid var(--mk-line);
+  background: var(--mk-bg2);
+}
+.mk-me {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 6px 10px;
+}
+.mk-me .fa-user-circle {
+  font-size: 30px;
+  color: var(--mk-accent);
+}
+.mk-me-name {
+  font-weight: 600;
+  color: var(--mk-text);
+  font-size: 14px;
+}
+.mk-me-role {
+  font-size: 12px;
+  color: var(--mk-muted);
+}
+.sidenav .mk-sidefoot a {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 8px !important;
+  margin: 2px 0 !important;
+  border-radius: 8px !important;
+  color: var(--mk-muted) !important;
+  box-shadow: none !important;
+}
+.sidenav .mk-sidefoot a:hover {
+  background: var(--mk-panel) !important;
+  color: var(--mk-text) !important;
+}
+.sidenav .mk-sidefoot a i {
+  width: 18px;
+  text-align: center;
+}
+.mk-theme-cycle {
+  width: 100%;
+  margin-top: 10px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px !important;
+  border-radius: 8px !important;
+  border: 1px solid var(--mk-line) !important;
+  background: var(--mk-panel) !important;
+  color: var(--mk-text) !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+}
+.mk-theme-cycle:hover {
+  filter: brightness(1.1);
+}
+
+/* Sidebar tertutup: hanya ikon yang tampil */
+body.mk-collapsed .sidenav {
+  width: 64px !important;
+  overflow-x: hidden !important;
+  border-right: 1px solid var(--mk-line) !important;
+}
+body.mk-collapsed #main {
+  margin-left: 64px !important;
+}
+body.mk-collapsed .sidenav .menu {
+  display: flex !important;
+  justify-content: center;
+  font-size: 0;
+  padding: 11px 0 !important;
+  margin: 2px 6px !important;
+}
+body.mk-collapsed .sidenav .menu i {
+  font-size: 18px !important;
+  margin: 0 !important;
+}
+body.mk-collapsed .sidenav > .card-header,
+body.mk-collapsed .sidenav .spa,
+body.mk-collapsed .sidenav .dropdown-container,
+body.mk-collapsed .sidenav .mk-me > div {
+  display: none !important;
+}
+body.mk-collapsed .sidenav .mk-me {
+  justify-content: center;
+  padding: 4px 0 8px;
+}
+body.mk-collapsed .sidenav .mk-me .fa-user-circle {
+  font-size: 26px;
+}
+body.mk-collapsed .sidenav .mk-sidefoot {
+  padding: 8px 6px 10px;
+}
+body.mk-collapsed .sidenav .mk-sidefoot a {
+  justify-content: center;
+  font-size: 0;
+  padding: 10px 0 !important;
+}
+body.mk-collapsed .sidenav .mk-sidefoot a i {
+  font-size: 18px;
+}
+body.mk-collapsed .sidenav .mk-theme-cycle {
+  font-size: 0;
+  padding: 9px 0 !important;
+}
+body.mk-collapsed .sidenav .mk-theme-cycle i {
+  font-size: 18px;
+}
+
+/* Mode terang: teks yang sebelumnya berwarna terang dari tema gelap */
+html[data-mk="light"] :is(td, th, label, a, span, div, b, p, li, small, option, h1, h2, h3, h4, h5, h6, strong, em, dt, dd):not(.mk-auth, .mk-auth *, .CodeMirror, .CodeMirror *) {
+  color: var(--mk-text);
+}
+html[data-mk="light"] .muted, html[data-mk="light"] .text-grey, html[data-mk="light"] .text-muted {
+  color: var(--mk-muted) !important;
+}
+html[data-mk="light"] [style*="#86efac"] {
+  color: #15803d !important;
+}
+html[data-mk="light"] [style*="#fca5a5"] {
+  color: #b91c1c !important;
+}
+html[data-mk="light"] .sidenav .mk-sidefoot a,
+html[data-mk="light"] .sidenav a.menu {
+  color: var(--mk-muted) !important;
+}
+html[data-mk="light"] .sidenav a.menu.active,
+html[data-mk="light"] .sidenav a.active {
+  color: var(--mk-accent) !important;
+}
+html[data-mk="light"] .btn, html[data-mk="light"] button.btn, html[data-mk="light"] .mk-theme-cycle {
+  color: #04111f !important;
+}
+html[data-mk="light"] .mk-theme-cycle {
+  color: var(--mk-text) !important;
+}
+html[data-mk="light"] .btn.bg-danger, html[data-mk="light"] .btn.bg-red {
+  color: #ffffff !important;
+}
+
+/* Brand di navbar mengikuti tema */
+#brand, #brand:hover {
+  color: var(--mk-text) !important;
+}
+
+/* Grafik Highcharts pada mode terang */
+.highcharts-background,
+.highcharts-plot-background {
+  fill: var(--mk-panel) !important;
+}
+.highcharts-title,
+.highcharts-subtitle,
+.highcharts-axis-title,
+.highcharts-axis-labels text,
+.highcharts-legend-item text,
+.highcharts-xaxis-labels text,
+.highcharts-yaxis-labels text,
+.highcharts-tooltip text {
+  fill: var(--mk-text) !important;
+  color: var(--mk-text) !important;
+}
+.highcharts-grid-line,
+.highcharts-tick,
+.highcharts-axis-line {
+  stroke: var(--mk-line) !important;
+}
+.highcharts-plot-border,
+.highcharts-border {
+  stroke: var(--mk-line) !important;
+}
+.highcharts-tooltip-box {
+  fill: var(--mk-panel) !important;
+  stroke: var(--mk-line) !important;
+}
+.highcharts-legend-item text {
+  font-weight: 600;
+}
+
+/* Mode terang: grup menu di sidebar dan baris tabel saat hover */
+html[data-mk="light"] .dropdown-btn,
+html[data-mk="light"] .dropdown-btn.active {
+  background-color: var(--mk-panel2) !important;
+  color: var(--mk-text) !important;
+  font-weight: 600;
+}
+html[data-mk="light"] .dropdown-btn:hover {
+  background-color: var(--mk-panel) !important;
+  color: var(--mk-accent) !important;
+}
+html[data-mk="light"] tbody tr:hover,
+html[data-mk="light"] tbody tr:hover td,
+html[data-mk="light"] .table-hover tbody tr:hover,
+html[data-mk="light"] .table-hover tbody tr:hover td {
+  background-color: var(--mk-panel2) !important;
+  color: var(--mk-text) !important;
+}
+
+/* Jarak kanan navbar */
+.navbar .navbar-right {
+  padding-right: 20px !important;
+  margin-right: 8px !important;
+}
+
+/* Latar jaringan untuk sidebar dan navbar atas */
+.sidenav,
+#navbar.navbar,
+.navbar {
+  background-color: #0a0f1c !important;
+  background-image: url('../img/net-dark.svg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+html[data-mk="light"] .sidenav,
+html[data-mk="light"] #navbar.navbar,
+html[data-mk="light"] .navbar {
+  background-color: var(--mk-bg2) !important;
+  background-image: url('../img/net-light.svg?v=2') !important;
+}
+@media (prefers-color-scheme: light) {
+  html[data-mk="auto"] .sidenav,
+  html[data-mk="auto"] #navbar.navbar,
+  html[data-mk="auto"] .navbar {
+    background-color: var(--mk-bg2) !important;
+    background-image: url('../img/net-light.svg?v=2') !important;
+  }
+}
+
+/* Blok bawah sidebar ikut menampilkan latar jaringan */
+.sidenav .mk-sidefoot {
+  background: transparent !important;
+}
+html[data-mk="light"] .sidenav .mk-sidefoot {
+  background: transparent !important;
+}
+
+/* Logo HotspotNOC sebagai latar pojok kiri atas navbar, teks MIKHMON tetap ada agar pemeriksaan skrip berjalan */
+#brand {
+  display: block !important;
+  width: 112px;
+  min-width: 0 !important;
+  height: 24px;
+  margin-top: 0;
+  font-size: 0 !important;
+  color: transparent !important;
+  background-repeat: no-repeat !important;
+  background-position: left center !important;
+  background-size: contain !important;
+  background-image: url('../img/logo-dark.svg?v=2') !important;
+}
+html[data-mk="light"] #brand {
+  background-image: url('../img/logo-light.svg?v=2') !important;
+}
+@media (prefers-color-scheme: light) {
+  html[data-mk="auto"] #brand {
+    background-image: url('../img/logo-light.svg?v=2') !important;
+  }
+}
+
+/* Logo dan tombol hamburger sejajar di tengah navbar */
+.navbar .navbar-left {
+  display: flex !important;
+  align-items: center;
+  height: 51px;
+}
+#brand {
+  padding: 0 !important;
+  margin: 0 !important;
+  align-self: center;
+}
+#openNav, #closeNav {
+  align-self: center;
+  line-height: 1;
+}
+/* Sidebar tertutup: logo teks disembunyikan, sisakan ikon segitiga */
+body.mk-collapsed #brand {
+  width: 30px !important;
+  min-width: 0 !important;
+  height: 30px !important;
+  background-image: url('../img/favicon.svg?v=1') !important;
+  background-size: contain !important;
+  background-position: center !important;
+}

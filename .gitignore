@@ -1,0 +1,7 @@
+# Data sensitif dan hasil runtime (jangan diunggah)
+include/users.json
+include/config.php
+html/include/
+html/img/logo-*.png
+*.bak*
+.DS_Store
