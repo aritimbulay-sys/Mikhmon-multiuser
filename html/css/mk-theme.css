@@ -546,3 +546,8 @@ body.mk-collapsed #brand {
   background-size: contain !important;
   background-position: center !important;
 }
+
+/* Geser logo dan hamburger ke kanan */
+.navbar .navbar-left {
+  padding-left: 27px !important;
+}

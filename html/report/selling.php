@@ -22,6 +22,7 @@ if (!isset($_SESSION["mikhmon"])) {
 	header("Location:../admin.php?id=login");
 } else {
 
+	include_once(__DIR__ . '/../lib/mkcache.php');
 	$idhr = $_GET['idhr'];
 	$idbl = $_GET['idbl'];
 	$idbl2 = explode("/",$idhr)[0].explode("/",$idhr)[2];
@@ -70,6 +71,7 @@ if (!isset($_SESSION["mikhmon"])) {
 			}
 
 		}
+		mk_sales_clear($session, $idbl);
 		echo "<script>window.location='./?report=selling&session=" . $session . "'</script>";
 	}
 
@@ -90,9 +92,7 @@ if (!isset($_SESSION["mikhmon"])) {
 		$shd = "inline-block";
 	} elseif (strlen($idbl) > "0") {
 		if ($API->connect($iphost, $userhost, decrypt($passwdhost))) {
-			$getData = $API->comm("/system/script/print", array(
-				"?owner" => "$idbl",
-			));
+			$getData = mk_sales_cached($API, $session, $idbl, 60);
 			$TotalReg = count($getData);
 		}
 		$filedownload = $idbl;
@@ -110,9 +110,7 @@ if (!isset($_SESSION["mikhmon"])) {
 		$shd = "none";
 	} elseif (strlen($idbl) > "0" ) {
 		if ($API->connect($iphost, $userhost, decrypt($passwdhost))) {
-			$getData = $API->comm("/system/script/print", array(
-				"?owner" => "$idbl",
-			));
+			$getData = mk_sales_cached($API, $session, $idbl, 60);
 			$TotalReg = count($getData);
 		}
 		$filedownload = $idbl;
@@ -350,6 +348,7 @@ $(document).ready(function(){
 				</thead>
 				<tbody>
 				<?php
+			$profileTotals = array();
 			if ($prefix != "") {
 				for ($i = 0; $i < $TotalReg; $i++) {
 					$getname = explode("-|-", $getData[$i]['name']);
@@ -377,6 +376,7 @@ $(document).ready(function(){
 						echo "</td>";
 						echo "<td style='text-align:right;'>";
 						$price = $getname[3];
+						$profileTotals[$profile] = ($profileTotals[$profile] ?? 0) + (int)$price;
 						echo $price;
 						echo "</td>";
 						echo "</tr>";
@@ -408,6 +408,7 @@ $(document).ready(function(){
 					echo "</td>";
 					echo "<td style='text-align:right;'>";
 					$price = $getname[3];
+						$profileTotals[$profile] = ($profileTotals[$profile] ?? 0) + (int)$price;
 					echo $price;
 					echo "</td>";
 					echo "</tr>";
@@ -424,6 +425,29 @@ $(document).ready(function(){
 			</tbody>
 			</table>
 		</div>
+<?php if (!empty($profileTotals)) { arsort($profileTotals); ?>
+<h3 style="margin-top:20px;"><i class="fa fa-pie-chart"></i> Selling Report Per Profile</h3>
+<div class="overflow box-bordered" style="max-height: 70vh">
+<table class="table table-bordered table-hover text-nowrap">
+<thead class="thead-light">
+<tr>
+<th>&#8470;</th>
+<th><?= $_profile ?></th>
+<th style="text-align:right;"><?= $_total ?></th>
+</tr>
+</thead>
+<tbody>
+<?php $pn = 1; foreach ($profileTotals as $pname => $ptotal) { ?>
+<tr>
+<td><?= $pn++; ?></td>
+<td><?= htmlspecialchars($pname); ?></td>
+<td style="text-align:right;"><?= number_format((float)$ptotal, 2); ?></td>
+</tr>
+<?php } ?>
+</tbody>
+</table>
+</div>
+<?php } ?>
 </div>
 </div>
 </div>

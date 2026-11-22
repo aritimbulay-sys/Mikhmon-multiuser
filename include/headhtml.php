@@ -35,7 +35,7 @@ error_reporting(0);
 		<!-- Mikhmon UI -->
 		<link rel="stylesheet" href="css/mikhmon-ui.<?= $theme; ?>.min.css">
 		<!-- Tema tambahan Mikhmon multi-user -->
-		<link rel="stylesheet" href="css/mk-theme.css?v=26">
+		<link rel="stylesheet" href="css/mk-theme.css?v=29">
 		<script>
 		(function () {
 			var key = 'mk-theme';

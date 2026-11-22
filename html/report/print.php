@@ -39,6 +39,7 @@ if (!isset($_SESSION["mikhmon"])) {
   $API = new RouterosAPI();
   $API->debug = false;
 
+	include_once(__DIR__ . '/../lib/mkcache.php');
 	$idhr = $_GET['idhr'];
 	$idbl = $_GET['idbl'];
 	$idbl2 = explode("/",$idhr)[0].explode("/",$idhr)[2];
@@ -61,9 +62,11 @@ if (!isset($_SESSION["mikhmon"])) {
 		$fcomment = explode("!!",$prefix)[1];
 	}else{$fcomment = $fcomment;}
 
-	$gettimezone = $API->comm("/system/clock/print");
-	$timezone = $gettimezone[0]['time-zone-name'];
-	date_default_timezone_set($timezone);
+	if ($API->connect($iphost, $userhost, decrypt($passwdhost))) {
+		$gettimezone = $API->comm("/system/clock/print");
+		$timezone = $gettimezone[0]['time-zone-name'];
+		date_default_timezone_set($timezone);
+	}
 
 	if (isset($remdata)) {
 		if (strlen($idhr) > "0") {
@@ -94,6 +97,7 @@ if (!isset($_SESSION["mikhmon"])) {
 			}
 
 		}
+		mk_sales_clear($session, $idbl);
 		echo "<script>window.location='./?report=selling&session=" . $session . "'</script>";
 	}
 
@@ -116,9 +120,7 @@ if (!isset($_SESSION["mikhmon"])) {
 		$shd = "inline-block";
 	} elseif (strlen($idbl) > "0") {
 		if ($API->connect($iphost, $userhost, decrypt($passwdhost))) {
-			$getData = $API->comm("/system/script/print", array(
-				"?owner" => "$idbl",
-			));
+			$getData = mk_sales_cached($API, $session, $idbl, 60);
 			$TotalReg = count($getData);
 		}
 		$filedownload = $idbl;
@@ -136,9 +138,7 @@ if (!isset($_SESSION["mikhmon"])) {
 		$shd = "none";
 	} elseif (strlen($idbl) > "0" ) {
 		if ($API->connect($iphost, $userhost, decrypt($passwdhost))) {
-			$getData = $API->comm("/system/script/print", array(
-				"?owner" => "$idbl",
-			));
+			$getData = mk_sales_cached($API, $session, $idbl, 60);
 			$TotalReg = count($getData);
 		}
 		$filedownload = $idbl;
