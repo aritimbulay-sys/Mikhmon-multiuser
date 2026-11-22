@@ -269,14 +269,14 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 
 		  <div class="overflow box-bordered" style="max-height: 70vh">
 			<table id="dataTable" class="table table-bordered table-hover text-nowrap">
-				<thead><tr><th colspan="7"><?= "<h3>".$_selling_report."</h3>". $hotspotname ?></th></tr></thead>
+				<thead><tr><th colspan="6"><?= "<h3>".$_selling_report."</h3>". $hotspotname ?></th></tr></thead>
 				<tr>
-				  <th style="text-align:left;" colspan=5 ><?= $_selling_report ?> <?= $trange.$filedownload . $fprefix; ?><b style="font-size:0;">,,,</b></th>
+				  <th style="text-align:left;" colspan=4 ><?= $_selling_report ?> <?= $trange.$filedownload . $fprefix; ?><b style="font-size:0;">,,,</b></th>
 				  <th style="text-align:right;"><?= $_total ?></th>
 				  <th style="text-align:right;" id="total"></th>
 				</tr>
 				<tr style="text-align:left;">
-				  <th >&#8470;</th>
+				  
 					<th ><?= $_date ?></th>
 					<th ><?= $_time ?></th>
 					<th ><?= $_user_name ?></th>

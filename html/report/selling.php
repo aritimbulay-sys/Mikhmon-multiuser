@@ -200,15 +200,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 			echo 'th.innerHTML = "'.$currency.' " + number_format(th.innerHTML + (sum),2,".",",") ;';
 		} ?>
 		
-		var tables = document.getElementsByTagName('tbody');
-    var table = tables[tables.length -1];
-    var rows = table.rows;
-    for(var i = 0, td; i < rows.length; i++){
-        td = document.createElement('td');
-        td.appendChild(document.createTextNode(i + 1));
-        rows[i].insertBefore(td, rows[i].firstChild);
-    }
-        }
+}
 		</script>
 
 <script>
@@ -332,12 +324,12 @@ $(document).ready(function(){
 			<table id="dataTable" class="table table-bordered table-hover text-nowrap">
 				<thead class="thead-light">
 				<tr>
-				  <th colspan=5 ><?= $_selling_report ?> <?= $filedownload . $fprefix; ?><b style="font-size:0;">,,,,</b></th>
+				  <th colspan=4 ><?= $_selling_report ?> <?= $filedownload . $fprefix; ?><b style="font-size:0;">,,,,</b></th>
 				  <th style="text-align:right;"><?= $_total ?></th>
 				  <th style="text-align:right;" id="total"></th>
 				</tr>
 				<tr>
-				  <th >&#8470;</th>
+				  
 					<th ><?= $_date ?></th>
 					<th ><?= $_time ?></th>
 					<th ><?= $_user_name ?></th>
@@ -431,15 +423,13 @@ $(document).ready(function(){
 <table class="table table-bordered table-hover text-nowrap">
 <thead class="thead-light">
 <tr>
-<th>&#8470;</th>
 <th><?= $_profile ?></th>
 <th style="text-align:right;"><?= $_total ?></th>
 </tr>
 </thead>
 <tbody>
-<?php $pn = 1; foreach ($profileTotals as $pname => $ptotal) { ?>
+<?php foreach ($profileTotals as $pname => $ptotal) { ?>
 <tr>
-<td><?= $pn++; ?></td>
 <td><?= htmlspecialchars($pname); ?></td>
 <td style="text-align:right;"><?= number_format((float)$ptotal, 2); ?></td>
 </tr>

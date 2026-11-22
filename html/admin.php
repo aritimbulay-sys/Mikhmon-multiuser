@@ -121,6 +121,8 @@ if ($id == "login" || substr($url, -1) == "p") {
         return false;
     };
     </script>';*/
+} elseif ($id == "settings" && !(isset($_SESSION["mikhmon"]) && um_is_admin($_SESSION["mikhmon"]))) {
+  echo "<script>window.location='./admin.php?id=sessions'</script>";
 } elseif ($id == "settings" && !empty($session) || $id == "settings" && !empty($router)) {
   include_once('./include/menu.php');
   include_once('./settings/settings.php');

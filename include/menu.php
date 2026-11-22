@@ -206,7 +206,9 @@ if($idleto != "disable"){
 ?>  
   <div class="menu text-center align-middle card-header" style="border-radius:0;"><h3 id="MikhmonSession"><?= $session; ?></h3></div>
   <a class="connect menu <?= $shome; ?>" id="<?= $session; ?>&c=settings"><i class='fa fa-tachometer'></i> <?= $_dashboard ?></a>
+<?php if (!isset($_SESSION['mikhmon']) || um_is_admin($_SESSION['mikhmon'])) { ?>
   <a  href="./admin.php?id=settings&session=<?= $session; ?>" class="menu <?= $ssettings; ?>" title="Mikhmon Settings"><i class='fa fa-gear'></i> <?= $_session_settings ?></a>
+  <?php } ?>
   <a href="./admin.php?id=uplogo&session=<?= $session; ?>" class="menu <?= $suplogo; ?>"><i class="fa fa-upload "></i> <?= $_upload_logo ?></a>
 <?php if (isset($_SESSION['mikhmon']) && um_is_admin($_SESSION['mikhmon'])) { ?>
   <a href="./admin.php?id=editor&template=default&session=<?= $session; ?>" class="menu <?= $seditor; ?>"><i class="fa fa-edit"></i> <?= $_template_editor ?></a>
@@ -252,6 +254,7 @@ include('./info.php');
 <a id="cpage" class="navbar-left" href="javascript:void(0)"><?= $mpage; ?></a>
 </div>
  <div class="navbar-right">
+  <a title="Idle Timeout" style="<?= $didleto; ?>"><span style="width:70px;" class="pd-5 radius-3"><i class="fa fa-clock-o mr-1"></i>  <span class="mr-1" id="timer"></span></span></a>
   <select class="connect optfa ses text-right mr-t-10 pd-5">
     <option id="MikhmonSession" value="<?= $session; ?>"><?= $hotspotname; ?></option>
       <?php
@@ -270,7 +273,6 @@ include('./info.php');
       ?>
     
   </select>
-  <a title="Idle Timeout" style="<?= $didleto; ?>"><span style="width:70px;" class="pd-5 radius-3"><i class="fa fa-clock-o mr-1"></i>  <span class="mr-1" id="timer"></span></span></a>
 </div>
 </div>
 
@@ -341,7 +343,9 @@ include('./info.php');
     <i class="fa fa-caret-down"></i> &nbsp;
   </div>
   <div class="dropdown-container <?= $settmenu; ?>">
+<?php if (!isset($_SESSION['mikhmon']) || um_is_admin($_SESSION['mikhmon'])) { ?>
   <a href="./admin.php?id=settings&session=<?= $session; ?>" class="menu "> <i class="fa fa-gear "></i> <?= $_session_settings ?> </a>
+  <?php } ?>
   <a href="./admin.php?id=sessions" class="menu "> <i class="fa fa-gear "></i> Daftar Router </a>
   <a href="./?hotspot=uplogo&session=<?= $session; ?>" class="menu <?= $uplogo; ?>"> <i class="fa fa-upload "></i> <?= $_upload_logo ?> </a>
   <?php if (isset($_SESSION['mikhmon']) && um_is_admin($_SESSION['mikhmon'])) { ?>

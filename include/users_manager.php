@@ -246,6 +246,25 @@ function um_set_routers($user, $routers) {
     return true;
 }
 
+function um_my_routers($user) {
+    $out = array();
+    $cfg = __DIR__ . '/config.php';
+    if (!file_exists($cfg)) {
+        return $out;
+    }
+    foreach (file($cfg) as $line) {
+        $p = explode("'", $line);
+        $r = isset($p[1]) ? $p[1] : '';
+        if ($r == '' || $r == 'mikhmon' || strpos($r, 'new-') === 0) {
+            continue;
+        }
+        if (um_owns($user, $r)) {
+            $out[$r] = $r;
+        }
+    }
+    return array_values($out);
+}
+
 function um_ensure_session_user() {
     if (!isset($_SESSION['mikhmon']) || $_SESSION['mikhmon'] === '') {
         return;

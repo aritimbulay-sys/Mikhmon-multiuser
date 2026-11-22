@@ -551,3 +551,22 @@ body.mk-collapsed #brand {
 .navbar .navbar-left {
   padding-left: 27px !important;
 }
+
+/* Navbar kanan (dropdown router, jam, bahasa) selalu di pojok kanan atas */
+#navbar.navbar {
+  position: relative;
+}
+#navbar .navbar-right {
+  position: absolute !important;
+  top: 0;
+  right: 0;
+  height: 51px;
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  padding-right: 16px !important;
+  margin: 0 !important;
+}
+#navbar .navbar-right select {
+  margin-top: 0 !important;
+}
