@@ -12,6 +12,7 @@ if (!isset($_SESSION["mikhmon"])) {
     $confp = $_POST['conf_pass'];
     if (!um_auth($me, $curp)) {
       $pmsg = "Password lama salah.";
+      wl_log('ganti_password', 'password lama salah');
     } elseif (strlen($newp) < 6) {
       $pmsg = "Password baru minimal 6 karakter.";
     } elseif ($newp !== $confp) {
@@ -20,6 +21,7 @@ if (!isset($_SESSION["mikhmon"])) {
       $pmsg = "Password baru harus berbeda dari password lama.";
     } elseif (um_change_password($me, $newp)) {
       $pok = true;
+      wl_log('ganti_password', 'berhasil');
       $pmsg = "Password berhasil diganti.";
     } else {
       $pmsg = "Gagal mengganti password.";

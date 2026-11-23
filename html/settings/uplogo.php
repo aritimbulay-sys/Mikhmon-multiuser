@@ -77,6 +77,7 @@ if (!isset($_SESSION["mikhmon"])) {
 // if everything is ok, try to upload file
     } else {
       if (move_uploaded_file($_FILES["UploadLogo"]["tmp_name"], $logo_file)) {
+        wl_log('upload_logo', basename($_FILES["UploadLogo"]["name"]));
         if (isset($_SESSION['mikhmon']) && function_exists('um_add_logo')) {
           um_add_logo($_SESSION['mikhmon'], basename($_FILES["UploadLogo"]["name"]));
         }

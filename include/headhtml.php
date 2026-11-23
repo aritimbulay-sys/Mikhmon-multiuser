@@ -35,7 +35,7 @@ error_reporting(0);
 		<!-- Mikhmon UI -->
 		<link rel="stylesheet" href="css/mikhmon-ui.<?= $theme; ?>.min.css">
 		<!-- Tema tambahan Mikhmon multi-user -->
-		<link rel="stylesheet" href="css/mk-theme.css?v=30">
+		<link rel="stylesheet" href="css/mk-theme.css?v=31">
 		<script>
 		(function () {
 			var key = 'mk-theme';
@@ -48,9 +48,10 @@ error_reporting(0);
 			}
 			var saved = 'dark';
 			try { saved = localStorage.getItem(key) || 'dark'; } catch (e) {}
+			if (saved !== 'dark' && saved !== 'light') { saved = 'dark'; }
 			apply(saved);
-			var modes = { dark: ['fa-moon-o', 'Gelap'], light: ['fa-sun-o', 'Terang'], auto: ['fa-desktop', 'Otomatis'] };
-			var next = { dark: 'light', light: 'auto', auto: 'dark' };
+			var modes = { dark: ['fa-moon-o', 'Gelap'], light: ['fa-sun-o', 'Terang'] };
+			var next = { dark: 'light', light: 'dark' };
 			function cycleLabel() {
 				var cur = document.documentElement.getAttribute('data-mk');
 				document.querySelectorAll('[data-mk-cycle]').forEach(function (b) {

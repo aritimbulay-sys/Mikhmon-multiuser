@@ -71,6 +71,7 @@ if (!isset($_SESSION["mikhmon"])) {
 			}
 
 		}
+		if (function_exists('wl_log')) { wl_log('hapus_laporan', $idbl . ($idhr != '' ? ' ' . $idhr : '')); }
 		mk_sales_clear($session, $idbl);
 		echo "<script>window.location='./?report=selling&session=" . $session . "'</script>";
 	}

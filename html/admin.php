@@ -78,7 +78,7 @@ if (isset($_SESSION["mikhmon"]) && !empty($session) && function_exists('um_owns'
     exit;
   }
 }
-if ($id == "login" || substr($url, -1) == "p") {
+if ($id == "login" || substr($url, -9) == "admin.php") {
 
   if (isset($_POST['login'])) {
     $user = $_POST['user'];
@@ -96,8 +96,10 @@ if ($id == "login" || substr($url, -1) == "p") {
     if ($login_ok) {
       $_SESSION["mikhmon"] = $user;
       um_ensure_session_user();
+      wl_log('login', 'berhasil', $user);
       echo "<script>window.location='./admin.php?id=sessions'</script>";
     } else {
+      wl_log('login_gagal', 'username: ' . $user, $user);
       $error = '<div style="width: 100%; padding:5px 0px 5px 0px; border-radius:5px;" class="bg-danger"><i class="fa fa-ban"></i> Alert!<br>Invalid username or password.</div>';
     }
   }
@@ -169,6 +171,7 @@ if ($id == "login" || substr($url, -1) == "p") {
     echo "<script>window.location='./admin.php?id=sessions'</script>";
     exit;
   }
+  wl_log('hapus_router', $session);
   $fc = file("./include/config.php" );
   $f = fopen("./include/config.php", "w");
   $q = "'";
@@ -190,6 +193,7 @@ if ($id == "login" || substr($url, -1) == "p") {
 } elseif ($id == "logout") {
   include_once('./include/menu.php');
   echo "<b class='cl-w'><i class='fa fa-circle-o-notch fa-spin' style='font-size:24px'></i> Logout...</b>";
+  wl_log('logout', 'keluar');
   session_destroy();
   echo "<script>window.location='./admin.php?id=login'</script>";
 } elseif ($id == "remove-logo" && $logo != ""  && !empty($session)) {
@@ -197,6 +201,7 @@ if ($id == "login" || substr($url, -1) == "p") {
   $logopath = "./img/";
   $remlogo = $logopath . basename($logo);
   if (!isset($_SESSION["mikhmon"]) || !function_exists('um_owns_logo') || um_owns_logo($_SESSION["mikhmon"], basename($logo))) {
+    wl_log('hapus_logo', basename($logo));
     unlink("$remlogo");
     if (function_exists('um_remove_logo_all')) {
       um_remove_logo_all(basename($logo));
@@ -211,6 +216,9 @@ if ($id == "login" || substr($url, -1) == "p") {
 } elseif ($id == "password") {
   include_once('./include/menu.php');
   include_once('./settings/changepass.php');
+} elseif ($id == "weblog") {
+  include_once('./include/menu.php');
+  include_once('./include/weblog_page.php');
 } elseif ($id == "users") {
   include_once('./include/menu.php');
   include_once('./include/users_page.php');

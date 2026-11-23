@@ -265,6 +265,82 @@ function um_my_routers($user) {
     return array_values($out);
 }
 
+function wl_file() {
+    return __DIR__ . '/weblog.json';
+}
+
+function wl_log($action, $detail = '', $user = null) {
+    if ($user === null) {
+        $user = isset($_SESSION['mikhmon']) ? $_SESSION['mikhmon'] : '-';
+    }
+    if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+        $ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ip = trim(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])[0]);
+    } else {
+        $ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '-';
+    }
+    $geo = '';
+    if (!empty($_SERVER['HTTP_CF_IPCOUNTRY']) && $_SERVER['HTTP_CF_IPCOUNTRY'] != 'XX') {
+        $geo = !empty($_SERVER['HTTP_CF_IPCITY']) ? $_SERVER['HTTP_CF_IPCITY'] . ', ' . $_SERVER['HTTP_CF_IPCOUNTRY'] : $_SERVER['HTTP_CF_IPCOUNTRY'];
+    }
+    $ua = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+    $entry = array('t' => date('Y-m-d H:i:s'), 'user' => (string)$user, 'aksi' => (string)$action, 'detail' => (string)$detail, 'ip' => $ip, 'geo' => $geo, 'ua' => $ua);
+    $file = wl_file();
+    file_put_contents($file, json_encode($entry, JSON_UNESCAPED_SLASHES) . "\n", FILE_APPEND | LOCK_EX);
+    if (is_file($file) && filesize($file) > 2000000) {
+        $lines = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        file_put_contents($file, implode("\n", array_slice($lines, -3000)) . "\n", LOCK_EX);
+    }
+    return true;
+}
+
+function wl_read($limit = 500) {
+    $file = wl_file();
+    if (!file_exists($file)) {
+        return array();
+    }
+    $lines = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    $out = array();
+    foreach (array_reverse($lines) as $l) {
+        $e = json_decode($l, true);
+        if (is_array($e)) {
+            $out[] = $e;
+        }
+        if (count($out) >= $limit) {
+            break;
+        }
+    }
+    return $out;
+}
+
+function wl_parse_ua($ua) {
+    $device = 'Komputer';
+    if (preg_match('/iPad|Tablet/i', $ua)) {
+        $device = 'Tablet';
+    } elseif (preg_match('/iPhone|Mobile|Android.*Mobi/i', $ua)) {
+        $device = 'Ponsel';
+    }
+    $os = '-';
+    if (preg_match('/Windows NT/i', $ua)) { $os = 'Windows'; }
+    elseif (preg_match('/iPhone|iPad|iPod/i', $ua)) { $os = 'iOS'; }
+    elseif (preg_match('/Mac OS X/i', $ua)) { $os = 'macOS'; }
+    elseif (preg_match('/Android/i', $ua)) { $os = 'Android'; }
+    elseif (preg_match('/CrOS/i', $ua)) { $os = 'ChromeOS'; }
+    elseif (preg_match('/Linux/i', $ua)) { $os = 'Linux'; }
+    $browser = '-';
+    if (preg_match('/(Edg|OPR)\/(\d+)/', $ua, $m)) {
+        $browser = ($m[1] == 'Edg' ? 'Edge ' : 'Opera ') . $m[2];
+    } elseif (preg_match('/(?:Chrome|CriOS)\/(\d+)/', $ua, $m)) {
+        $browser = 'Chrome ' . $m[1];
+    } elseif (preg_match('/(?:Firefox|FxiOS)\/(\d+)/', $ua, $m)) {
+        $browser = 'Firefox ' . $m[1];
+    } elseif (preg_match('/Version\/(\d+).*Safari/', $ua, $m)) {
+        $browser = 'Safari ' . $m[1];
+    }
+    return array('perangkat' => $device . ' · ' . $os, 'browser' => $browser);
+}
+
 function um_ensure_session_user() {
     if (!isset($_SESSION['mikhmon']) || $_SESSION['mikhmon'] === '') {
         return;

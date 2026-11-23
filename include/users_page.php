@@ -36,6 +36,7 @@ if (isset($_POST['add_user'])) {
         if ($nr === "user" && count($selected) == 0) {
             echo "<script>alert('Pilih minimal satu router untuk user')</script>";
         } elseif (um_add_user($nu, $np, $nr)) {
+            wl_log('tambah_user', $nu . ' (' . $nr . ')');
             if ($nr === "user") {
                 foreach ($selected as $sr) {
                     um_add_router($nu, $sr);
@@ -72,6 +73,7 @@ if (isset($_POST['save_user'])) {
             if ($er === "user") {
                 um_set_routers($eu, $esel);
             }
+            wl_log('ubah_user', $eu . ' role=' . $er . ' routers=' . implode(',', $esel) . ($ep !== '' ? ' +password' : ''));
             echo "<script>alert('User updated'); window.location='./admin.php?id=users'</script>";
             exit;
         }
@@ -81,6 +83,7 @@ if (isset($_POST['save_user'])) {
 if (isset($_GET['del_user'])) {
     $du = $_GET['del_user'];
     if (um_delete_user($du)) {
+        wl_log('hapus_user', $du);
         echo "<script>window.location='./admin.php?id=users'</script>";
         exit;
     }

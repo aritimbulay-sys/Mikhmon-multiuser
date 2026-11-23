@@ -87,6 +87,7 @@ if (!isset($_SESSION["mikhmon"])) {
       um_remove_router($_SESSION['mikhmon'], $session);
       um_add_router($_SESSION['mikhmon'], $sesname);
     }
+    wl_log('simpan_router', $session . ' -> ' . $sesname);
     echo "<script>window.location='./admin.php?id=settings&session=" . $sesname . "'</script>";
   }
   if ($currency == "") {

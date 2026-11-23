@@ -222,6 +222,7 @@ if($idleto != "disable"){
   <?php } ?>
 <?php if (isset($_SESSION['mikhmon']) && function_exists('um_role') && um_role($_SESSION['mikhmon']) === 'admin') { ?>
   <a href="./admin.php?id=users" class="menu"><i class="fa fa-users"></i> Users</a>
+<a href="./admin.php?id=weblog" class="menu"><i class="fa fa-list-alt"></i> Log Web</a>
 <?php } ?>
   <a href="./admin.php?id=about" class="menu <?= $sabout; ?>"><i class="fa fa-info-circle"></i> <?= $_about ?></a>
 <?php include './include/sidefoot.php'; ?>

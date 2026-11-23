@@ -28,20 +28,6 @@ html[data-mk="light"] {
   --mk-accent: #0e93b8;
   --mk-accent2: #2563eb;
 }
-@media (prefers-color-scheme: light) {
-  html[data-mk="auto"] {
-    color-scheme: light;
-    --mk-bg: #eff4f9;
-    --mk-bg2: #ffffff;
-    --mk-panel: #ffffff;
-    --mk-panel2: #edf3fa;
-    --mk-line: #dbe4ef;
-    --mk-text: #132030;
-    --mk-muted: #586a80;
-    --mk-accent: #0e93b8;
-    --mk-accent2: #2563eb;
-  }
-}
 
 /* Pemilih tema (ikon) di navbar */
 .mk-theme-switch {
@@ -482,14 +468,6 @@ html[data-mk="light"] .navbar {
   background-color: var(--mk-bg2) !important;
   background-image: url('../img/net-light.svg?v=2') !important;
 }
-@media (prefers-color-scheme: light) {
-  html[data-mk="auto"] .sidenav,
-  html[data-mk="auto"] #navbar.navbar,
-  html[data-mk="auto"] .navbar {
-    background-color: var(--mk-bg2) !important;
-    background-image: url('../img/net-light.svg?v=2') !important;
-  }
-}
 
 /* Blok bawah sidebar ikut menampilkan latar jaringan */
 .sidenav .mk-sidefoot {
@@ -515,11 +493,6 @@ html[data-mk="light"] .sidenav .mk-sidefoot {
 }
 html[data-mk="light"] #brand {
   background-image: url('../img/logo-light.svg?v=2') !important;
-}
-@media (prefers-color-scheme: light) {
-  html[data-mk="auto"] #brand {
-    background-image: url('../img/logo-light.svg?v=2') !important;
-  }
 }
 
 /* Logo dan tombol hamburger sejajar di tengah navbar */
