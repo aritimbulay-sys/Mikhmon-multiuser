@@ -84,10 +84,7 @@ if (!isset($_SESSION["mikhmon"])) {
 			}
 		} elseif (strlen($idbl) > "0") {
 			if ($API->connect($iphost, $userhost, decrypt($passwdhost))) {
-				$API->write('/system/script/print', false);
-				$API->write('?owner=' . $idbl . '', false);
-				$API->write('=.proplist=.id');
-				$ARREMD = $API->read();
+				$ARREMD = mk_sales_filtered_all($API, $idbl);
 				for ($i = 0; $i < count($ARREMD); $i++) {
 					$API->write('/system/script/remove', false);
 					$API->write('=.id=' . $ARREMD[$i]['.id']);
