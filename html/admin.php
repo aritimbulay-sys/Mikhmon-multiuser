@@ -63,6 +63,12 @@ include_once('./include/headhtml.php');
 include('./include/config.php');
 include('./include/readcfg.php');
 include_once('./include/users_manager.php');
+if (isset($_SESSION["mikhmon"])) {
+  include_once('./include/db_init.php');
+  if (function_exists('db_auto_sync')) {
+    db_auto_sync();
+  }
+}
 
 include_once('./lib/routeros_api.class.php');
 include_once('./lib/formatbytesbites.php');
