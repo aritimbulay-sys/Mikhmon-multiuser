@@ -63,12 +63,6 @@ include_once('./include/headhtml.php');
 include('./include/config.php');
 include('./include/readcfg.php');
 include_once('./include/users_manager.php');
-if (isset($_SESSION["mikhmon"])) {
-  include_once('./include/db_init.php');
-  if (function_exists('db_auto_sync')) {
-    db_auto_sync();
-  }
-}
 
 include_once('./lib/routeros_api.class.php');
 include_once('./lib/formatbytesbites.php');
@@ -228,14 +222,6 @@ if ($id == "login" || substr($url, -9) == "admin.php") {
 } elseif ($id == "users") {
   include_once('./include/menu.php');
   include_once('./include/users_page.php');
-} elseif ($id == "db" && !(isset($_SESSION["mikhmon"]) && function_exists('um_is_admin') && um_is_admin($_SESSION["mikhmon"]))) {
-  echo "<script>window.location='./admin.php?id=sessions'</script>";
-} elseif ($id == "db") {
-  include_once('./include/menu.php');
-  include_once('./include/db_page.php');
-} elseif ($id == "dbvoucher") {
-  include_once('./include/menu.php');
-  include_once('./include/db_voucher_page.php');
 } elseif (empty($id)) {
   echo "<script>window.location='./admin.php?id=sessions'</script>";
 } elseif(in_array($id, $ids) && empty($session)){
