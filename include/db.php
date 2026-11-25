@@ -5,6 +5,7 @@
  */
 class FileDb {
     private $dir;
+    private $transactionDepth = 0;
     private $lockFile;
 
     public function __construct($dir) {
@@ -20,6 +21,9 @@ class FileDb {
     }
 
     private function withLock($callback, $exclusive = true) {
+        if ($this->transactionDepth > 0) {
+            return $callback();
+        }
         $fp = fopen($this->lockFile, 'c+');
         if (!$fp) {
             throw new Exception('Cannot open db lock');
@@ -182,7 +186,12 @@ class FileDb {
     }
 
     public function transaction($callback) {
-        return $this->withLock($callback, true);
+        $this->transactionDepth++;
+        try {
+            return $callback();
+        } finally {
+            $this->transactionDepth--;
+        }
     }
 
     public function count($table, $filter = null) {

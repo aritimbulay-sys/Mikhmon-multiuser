@@ -7,6 +7,7 @@ if (!isset($_SESSION["mikhmon"])) {
 }
 
 require_once __DIR__ . '/db_init.php';
+require_once __DIR__ . '/db_import.php';
 require_once __DIR__ . '/users_manager.php';
 
 $db = db_init();
@@ -82,8 +83,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_voucher'])) {
                 ));
                 $profile = $db->findOne('voucher_profiles', array('id' => $pid));
             }
+            if ($profile) {
+                $API = db_router_client($router);
+                $profileExists = false;
+                if ($API) {
+                    $rprofiles = $API->comm('/ip/hotspot/user/profile/print');
+                    foreach ($rprofiles as $rp) {
+                        if (isset($rp['name']) && $rp['name'] === $profile['name']) {
+                            $profileExists = true;
+                            break;
+                        }
+                    }
+                    $API->disconnect();
+                }
+                if (!$profileExists) {
+                    $err = 'Profile not found on router: ' . $profile['name'];
+                    $profile = null;
+                }
+            }
             if (!$profile) {
-                $err = 'Profile not found';
+                $err = $err !== '' ? $err : 'Profile not found';
             } else {
                 $created = 0;
                 for ($i = 0; $i < $qty; $i++) {

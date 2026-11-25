@@ -98,12 +98,15 @@ function process_job($db, $job) {
             if ($existing) {
                 $rid = $existing['.id'];
             } else {
-                $API->comm('/ip/hotspot/user/add', array(
+                $addResult = $API->comm('/ip/hotspot/user/add', array(
                     'name' => $payload['username'],
                     'password' => $payload['password'],
                     'profile' => $payload['profile_name'],
                     'comment' => $payload['comment'],
                 ));
+                if (isset($addResult['!trap'][0]['message'])) {
+                    throw new Exception($addResult['!trap'][0]['message']);
+                }
                 $existing = find_router_user($API, $payload['username']);
                 if (!$existing) {
                     throw new Exception('User created but not found');
