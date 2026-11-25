@@ -227,6 +227,9 @@ if ($id == "login" || substr($url, -9) == "admin.php") {
 } elseif ($id == "db") {
   include_once('./include/menu.php');
   include_once('./include/db_page.php');
+} elseif ($id == "dbvoucher") {
+  include_once('./include/menu.php');
+  include_once('./include/db_voucher_page.php');
 } elseif (empty($id)) {
   echo "<script>window.location='./admin.php?id=sessions'</script>";
 } elseif(in_array($id, $ids) && empty($session)){

@@ -181,6 +181,10 @@ class FileDb {
         }, true);
     }
 
+    public function transaction($callback) {
+        return $this->withLock($callback, true);
+    }
+
     public function count($table, $filter = null) {
         return count($this->find($table, $filter));
     }
