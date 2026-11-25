@@ -5,3 +5,4 @@ html/include/
 html/img/logo-*.png
 *.bak*
 .DS_Store
+include/dbdata/

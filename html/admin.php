@@ -222,6 +222,11 @@ if ($id == "login" || substr($url, -9) == "admin.php") {
 } elseif ($id == "users") {
   include_once('./include/menu.php');
   include_once('./include/users_page.php');
+} elseif ($id == "db" && !(isset($_SESSION["mikhmon"]) && function_exists('um_is_admin') && um_is_admin($_SESSION["mikhmon"]))) {
+  echo "<script>window.location='./admin.php?id=sessions'</script>";
+} elseif ($id == "db") {
+  include_once('./include/menu.php');
+  include_once('./include/db_page.php');
 } elseif (empty($id)) {
   echo "<script>window.location='./admin.php?id=sessions'</script>";
 } elseif(in_array($id, $ids) && empty($session)){
