@@ -175,6 +175,7 @@ table.voucher {
   }
   
   $urilogin = "http://$dnsname/login?username=$username&password=$password";
+  $qrvalue = ($qrcode_tpl == "yes") ? $username : $urilogin;
   $qrid = "qr_" . $i;
   $qrcode = "
 	<canvas class='qrcode' id='".$qrid."'></canvas>
@@ -182,7 +183,7 @@ table.voucher {
       (function() {
         new QRious({
           element: document.getElementById('".$qrid."'),
-          value: ".json_encode($urilogin, JSON_UNESCAPED_SLASHES).",
+          value: ".json_encode($qrvalue, JSON_UNESCAPED_SLASHES).",
           size: 256
         });
 

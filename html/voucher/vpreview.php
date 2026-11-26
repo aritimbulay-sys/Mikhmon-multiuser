@@ -75,13 +75,14 @@ if ($currency == in_array($currency, $cekindo['indo'])) {
   }
   
   $urilogin = "http://$dnsname/login?username=$username&password=$password";
+  $qrvalue = ($qrcode_tpl == "yes") ? $username : $urilogin;
   $qrcode = "
 	<canvas class='qrcode' id='qr'></canvas>
     <script>
       (function() {
         new QRious({
           element: document.getElementById('qr'),
-          value: ".json_encode($urilogin, JSON_UNESCAPED_SLASHES).",
+          value: ".json_encode($qrvalue, JSON_UNESCAPED_SLASHES).",
           size: 256
         });
 
