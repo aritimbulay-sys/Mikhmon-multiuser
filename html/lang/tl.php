@@ -85,6 +85,7 @@ $_print_default = "Default";
 $_print = "Magprint";
 $_print_qr = "QR";
 $_print_small = "Maliit";
+$_print_qrcode = "QR-Code";
 $_processing = "Nagpoproseso...";
 $_profile = "Profile";
 $_qty = "Ilan";

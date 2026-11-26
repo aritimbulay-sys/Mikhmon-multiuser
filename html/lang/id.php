@@ -85,6 +85,7 @@ $_print = "Cetak";
 $_print_default = "Standar";
 $_print_qr = "QR";
 $_print_small = "Kecil";
+$_print_qrcode = "QR-Code";
 $_processing = "Memproses...";
 $_profile = "Profil";
 $_qty = "Jumlah";

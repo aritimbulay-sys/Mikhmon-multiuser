@@ -39,6 +39,7 @@ if (!isset($_SESSION["mikhmon"])) {
   $id = $_GET['id'];
   $qr = $_GET['qr'];
   $small = $_GET['small'];
+  $qrcode_tpl = $_GET['qrcode'];
   $userp = $_GET['user'];
 
   require('../lib/routeros_api.class.php');
@@ -174,14 +175,15 @@ table.voucher {
   }
   
   $urilogin = "http://$dnsname/login?username=$username&password=$password";
+  $qrid = "qr_" . $i;
   $qrcode = "
-	<canvas class='qrcode' id='".$uid."'></canvas>
+	<canvas class='qrcode' id='".$qrid."'></canvas>
     <script>
       (function() {
-        var ".$uid." = new QRious({
-          element: document.getElementById('".$uid."'),
-          value: '".$urilogin."',
-          size:'256'
+        new QRious({
+          element: document.getElementById('".$qrid."'),
+          value: ".json_encode($urilogin, JSON_UNESCAPED_SLASHES).",
+          size: 256
         });
 
       })();
@@ -191,7 +193,9 @@ table.voucher {
   $num = $i + 1;
   ?>
 <?php
-if ($userp != "") {
+if ($qrcode_tpl == "yes") {
+  include('./template-qrcode.php');
+} elseif ($userp != "") {
   include('./template-thermal.php');
 } else {
   if ($small == "yes") {

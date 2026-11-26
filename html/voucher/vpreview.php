@@ -38,6 +38,7 @@ if (!isset($_SESSION["mikhmon"])) {
   $qr = $_GET['qr'];
   $usermode = $_GET['usermode'];
   $small = $_GET['small'];
+  $qrcode_tpl = $_GET['qrcode'];
   $userp = $_GET['user'];
 
 
@@ -78,10 +79,10 @@ if ($currency == in_array($currency, $cekindo['indo'])) {
 	<canvas class='qrcode' id='qr'></canvas>
     <script>
       (function() {
-        var qr = new QRious({
+        new QRious({
           element: document.getElementById('qr'),
-          value: '".$urilogin."',
-          size:'256'
+          value: ".json_encode($urilogin, JSON_UNESCAPED_SLASHES).",
+          size: 256
         });
 
       })();
@@ -146,7 +147,9 @@ table.voucher {
 <?php
 
 
-if ($userp != "") {
+if ($qrcode_tpl == "yes") {
+  include('./template-qrcode.php');
+} elseif ($userp != "") {
   include('./template-thermal.php');
 } else {
   if ($small == "yes") {

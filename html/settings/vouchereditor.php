@@ -45,7 +45,12 @@ if ($telplate == "default" || $telplate == "rdefault") {
 	$telplatet = "template-small";
 	$popup = "javascript:window.open('./voucher/vpreview.php?usermode=up&small=yes&qr=no&session=" . $session . "','_blank','width=310,height=310')";
 	$popupQR = "javascript:window.open('./voucher/vpreview.php?usermode=up&small=yes&qr=yes&session=" . $session . "','_blank','width=310,height=310')";
+} elseif ($telplate == "qrcode" || $telplate == "rqrcode") {
+	$telplatet = "template-qrcode";
+	$popup = "javascript:window.open('./voucher/vpreview.php?usermode=vc&qrcode=yes&qr=yes&session=" . $session . "','_blank','width=310,height=340')";
+	$popupQR = "javascript:window.open('./voucher/vpreview.php?usermode=up&qrcode=yes&qr=yes&session=" . $session . "','_blank','width=310,height=340')";
 }
+$telplate_label = ($telplate == "qrcode") ? "QR-Code" : (($telplate == "rqrcode") ? "QR-Code" : ucfirst($telplate));
 if (isset($_POST['save'])) {
 	$template = './voucher/' . $telplatet . '.php';
 	$handle = fopen($template, 'w') or die('Cannot open file:  ' . $template);
@@ -99,10 +104,11 @@ textarea{
             					</div>
 								<div class="input-group-3">
 									<select style="padding:4.2px;"  class="group-item group-item-m" onchange="window.location.href=this.value+'&session=<?= $session; ?>';">
-	    								<option><?= ucfirst($telplate); ?></option>
+	    								<option><?= $telplate_label; ?></option>
 	    								<option value="./admin.php?id=editor&template=default">Default</option>
 	    								<option value="./admin.php?id=editor&template=thermal">Thermal</option>
 	    								<option value="./admin.php?id=editor&template=small">Small</option>
+	    								<option value="./admin.php?id=editor&template=qrcode">QR-Code</option>
 	    							</select>
 	    						</div>
 								
@@ -111,10 +117,11 @@ textarea{
             					</div>
 	    						<div class="input-group-3">
 	    							<select style="padding:4.2px;"  class="group-item group-item-r" onchange="window.location.href=this.value+'&session=<?= $session; ?>';">
-	    								<option><?= ucfirst($telplate); ?></option>
+	    								<option><?= $telplate_label; ?></option>
 	    								<option value="./admin.php?id=editor&template=rdefault">Default</option>
 	    								<option value="./admin.php?id=editor&template=rthermal">Thermal</option>
 	    								<option value="./admin.php?id=editor&template=rsmall">Small</option>
+	    								<option value="./admin.php?id=editor&template=rqrcode">QR-Code</option>
 	    							</select>
 	    						</div>
 								</div>
@@ -130,12 +137,16 @@ textarea{
 						echo file_get_contents('./voucher/template-thermal.php');
 					} elseif ($telplate == "small") {
 						echo file_get_contents('./voucher/template-small.php');
+					} elseif ($telplate == "qrcode") {
+						echo file_get_contents('./voucher/template-qrcode.php');
 					} elseif ($telplate == "rdefault") {
 						echo file_get_contents('./voucher/default.php');
 					} elseif ($telplate == "rthermal") {
 						echo file_get_contents('./voucher/default-thermal.php');
 					} elseif ($telplate == "rsmall") {
 						echo file_get_contents('./voucher/default-small.php');
+					} elseif ($telplate == "rqrcode") {
+						echo file_get_contents('./voucher/default-qrcode.php');
 					} ?>
 	        </textarea>
 			</form>
